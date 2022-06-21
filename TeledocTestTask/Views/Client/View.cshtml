@@ -1,0 +1,68 @@
+﻿@using TeledocTestTask.Models
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Hello ASP.NET MVC Core</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+</head>
+<body style="background-image: url(https://lh6.googleusercontent.com/proxy/Q0CjBkjIKUYWS4reRrjEBKuxck0ryWSCoAv__4-xsWDAeloCczG2gB0RcnYFDIN7pmx1-dV431aizC0ivv2kHt1-u51S0uQs2p8hP7Ck9yG8ur7EFI0ZT-Y=s0-d)">
+    <div align="center">
+        <div style="margin-top:50px;margin-top:50px;max-width: 100vh;font-size:25px;color:lightslategrey" class="bg-light p-1 rounded;">
+            <h4>@ViewBag.clientData.MiddleName @ViewBag.clientData.Name @ViewBag.clientData.LastName</h4>
+            <br />
+
+            <label>Дата добавления : </label>
+            <label readonly type="text" name="createtime" value="">@ViewBag.clientData.DateCreate.Date.ToString().Substring(0,10)</label>
+            <br />
+
+            <label>Дата изменения   : </label>
+            <label readonly type="text" name="createtime" value="">@ViewBag.clientData.DateUpdate.Date.ToString().Substring(0,10)</label>
+            <br />
+            <br />
+
+            @if (ViewBag.clientData.clientType == ClientType.IndividualEntrepreneur)
+            {
+                <label>Индивидуалный предприниматель</label>
+            }
+            else
+            {
+                <label>Юридическое лицо</label>
+            }
+            <br />
+            <br />
+            <label>ИНН</label>
+            <input readonly type="number" name="inn" value="@ViewBag.clientData.INN" />
+            <br />
+            <br />
+
+            @if (ViewBag.clientData.clientType == ClientType.LegalEntity)
+            {
+                <label>Учередители</label>
+                <br />
+                @foreach (Founder founder in ViewBag.Allfounders)
+                {
+                    {
+                        bool isCheked = false;
+                        @foreach (ClientFounder clientFounder in ViewBag.clientData.ClientFounders)
+                        {
+                            if (clientFounder.FounderId == founder.Id)
+                            {
+                                isCheked = true;
+                            }
+                        }
+
+                        if (isCheked)
+                        {
+                            @founder.Name @founder.MiddleName @founder.LastName
+                            <br/>
+                        }
+                     
+                    }
+                }
+            }
+            <a class="btn btn-lg btn-primary" role="button" href="~/home/index">Назад</a>
+        </div>
+    </div>
+</body>
+</html> 

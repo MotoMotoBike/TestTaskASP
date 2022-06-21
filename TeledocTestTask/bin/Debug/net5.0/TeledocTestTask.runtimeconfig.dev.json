@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\Meliodas\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Meliodas\\.nuget\\packages"
+    ]
+  }
+}

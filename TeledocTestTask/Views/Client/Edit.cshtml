@@ -1,0 +1,79 @@
+﻿@using TeledocTestTask.Models
+@using TeledocTestTask.ViewModels
+@model List<ChekerViewModel>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Hello ASP.NET MVC Core</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+</head>
+<body style="background-image: url(https://lh6.googleusercontent.com/proxy/Q0CjBkjIKUYWS4reRrjEBKuxck0ryWSCoAv__4-xsWDAeloCczG2gB0RcnYFDIN7pmx1-dV431aizC0ivv2kHt1-u51S0uQs2p8hP7Ck9yG8ur7EFI0ZT-Y=s0-d)">
+
+    <div align="center" style="margin-top:50px">
+        <form style="max-width: 100vh;font-size:25px" method="post" action="~/Client/Edit/@ViewBag.clientData.Id">
+            <h4 style="color : #FF0606">
+                @ViewBag.errMsg
+            </h4>
+            <div style="color:lightslategrey" class="bg-light p-1 rounded">
+                <label>Имя:</label><br />
+                <input type="text" value="@ViewBag.clientData.Name" name="name" /><br />
+
+                <label>Фамилия:</label><br />
+                <input type="text" value="@ViewBag.clientData.MiddleName" name="middleName" /><br />
+
+                <label>Отчество:</label><br />
+                <input type="text" value="@ViewBag.clientData.LastName" name="lastName" /><br /><br />
+
+                <label>Дата добавления : </label>
+                <label readonly type="text" name="createtime" value="">@ViewBag.clientData.DateCreate.Date.ToString().Substring(0,10)</label>
+                <br />
+
+                <label>Дата изменения : </label>
+                <label readonly type="text" name="createtime" value="">@ViewBag.clientData.DateUpdate.Date.ToString().Substring(0,10)</label>
+                <br />
+
+                <br />
+                @if (ViewBag.clientData.clientType == ClientType.IndividualEntrepreneur)
+                {
+                    <input type="radio" name="type" value="IP" checked />
+                    <label>Индивидуалный предприниматель</label>
+                    <br />
+                    <input type="radio" name="type" value="YL" />
+                    <label>Юридическое лицо</label>
+                    <br />
+
+                }
+                else
+                {
+                    <input type="radio" name="type" value="IP" />
+                    <label>Индивидуалный предприниматель</label>
+                    <br />
+                    <input type="radio" name="type" value="YL" checked />
+                    <label>Юридическое лицо</label>
+                    <br />
+                }
+
+                <label>ИНН</label>
+                <input type="number" min="0" value="@ViewBag.clientData.INN" name="inn" /><br /><br />
+                <label>Учередители</label><br />
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <div>
+                        @Html.EditorFor(m=>m[i].IsCheked)
+                        @Html.DisplayFor(m=>m[i].Name)
+                        @Html.HiddenFor(m=>m[i].Id)
+                        @Html.HiddenFor(m=>m[i].IsCheked)
+                        @Html.HiddenFor(m=>m[i].Name)
+                    </div>
+                }
+                <a class="btn btn-primary" role="button" href="~/home/index">Назад</a>
+                <input type="submit" class="btn btn-success" value="Обновить" />
+                <a class="btn btn-danger" role="button" href="~/client/delete/@ViewBag.clientData.Id">Удалить</a>
+
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
